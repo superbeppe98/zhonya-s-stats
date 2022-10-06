@@ -1,0 +1,29 @@
+{
+  "name": "zhonya-s-stats",
+  "version": "1.0.0",
+  "description": "Zhonya's Stats",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SuperBeppe98/Zhonya-s-Stats.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SuperBeppe98/Zhonya-s-Stats/issues"
+  },
+  "homepage": "https://github.com/SuperBeppe98/Zhonya-s-Stats#readme",
+  "dependencies": {
+    "discord.js": "^14.5.0",
+<<<<<<< HEAD
+    "dotenv": "^16.0.3",
+    "mongoose": "^6.6.1",
+=======
+    "mongoose": "^6.6.4",
+>>>>>>> 73474c7ff536d7159724df9ca0fd2533a40c5fba
+    "node-fetch": "^2.6.7"
+  }
+}
