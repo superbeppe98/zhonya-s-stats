@@ -1,6 +1,6 @@
 const fs = require('fs');
 const path = require('path');
-require('dotenv').config();
+config = require('dotenv').config();
 const { Client, GatewayIntentBits, Partials } = require("discord.js");
 const router = require('./botFunctions/_mainRouter.js');
 const refresh = require('./botFunctions/leaderboard_refresh.js');
