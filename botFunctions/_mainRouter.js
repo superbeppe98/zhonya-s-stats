@@ -10,23 +10,23 @@ const stats = require('./stats');
 
 async function router(config, interaction) {
     if (interaction.commandName == 'add_to_leaderboard')
-        addToLeaderBoard(config, interaction);
-    if (interaction.commandName == 'leaderboard')
-        leaderboard(interaction);
-    if (interaction.commandName == 'ping')
-        ping(interaction);
-    if (interaction.commandName == 'pino')
-        pino(interaction);
-    if (interaction.commandName == 'remove_from_leaderboard')
-        removeFromLeaderboard(interaction);
-    if (interaction.commandName == 'server')
-        server(interaction);
-    if (interaction.commandName == 'set_channel')
-        setChannel(interaction);
-    if (interaction.commandName == 'set_region')
-        setRegion(config, interaction);
-    if (interaction.commandName == 'stats')
-        stats(config, interaction);
+        addToLeaderBoard(config, interaction)
+    else if (interaction.commandName == 'leaderboard')
+        leaderboard(config, interaction)
+    else if (interaction.commandName == 'ping')
+        ping(config, interaction)
+    else if (interaction.commandName == 'pino')
+        pino(config, interaction)
+    else if (interaction.commandName == 'remove_from_leaderboard')
+        removeFromLeaderboard(config, interaction)
+    else if (interaction.commandName == 'server')
+        server(config, interaction)
+    else if (interaction.commandName == 'set_channel')
+        setChannel(config, interaction)
+    else if (interaction.commandName == 'set_region')
+        setRegion(config, interaction)
+    else if (interaction.commandName == 'stats')
+        stats(config, interaction)
 }
 
 module.exports = router;
