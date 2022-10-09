@@ -3,7 +3,13 @@ const reply = require('../reply.js');
 
 async function stats(config, interaction) {
     var usernameArg = interaction.options.get('username')?.value;
-    var stats = await riot.scrapper(config.region, usernameArg);
+    var queueArg = interaction.options.get('queue')?.value;
+    if (queueArg.toLowerCase() == "solo/duo") {
+        var stats = await riot.scrapper(config.region, usernameArg);
+    }
+    else if (queueArg.toLowerCase() == "flex") {
+        var stats = await riot.scrapperFlex(config.region, usernameArg);
+    }
     //console.log(stats);
     if (stats.exists === false) {
         interaction.reply('This player doesn\'t exist.');

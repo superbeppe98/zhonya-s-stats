@@ -6,6 +6,10 @@ const data = new SlashCommandBuilder()
 	.addStringOption(option =>
 		option.setName('username')
 			.setDescription('Summoner name')
+			.setRequired(true))
+	.addStringOption(option =>
+		option.setName('queue')
+			.setDescription('Enter the type of queue (solo/duo or flex)')
 			.setRequired(true));
 
 module.exports = { data }

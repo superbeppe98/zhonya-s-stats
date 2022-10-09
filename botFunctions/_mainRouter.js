@@ -6,7 +6,6 @@ const removeFromLeaderboard = require('./remove_from_leaderboard');
 const server = require('./server');
 const setChannel = require('./set_channel');
 const setRegion = require('./set_region');
-const stats_flex = require('./stats_flex');
 const stats = require('./stats');
 
 async function router(config, interaction) {
@@ -26,8 +25,6 @@ async function router(config, interaction) {
         setChannel(interaction);
     if (interaction.commandName == 'set_region')
         setRegion(config, interaction);
-    if (interaction.commandName == 'stats_flex')
-        stats_flex(config, interaction);
     if (interaction.commandName == 'stats')
         stats(config, interaction);
 }
