@@ -27,7 +27,7 @@ async function getEncryptedSummonerID(region, summonerName) {
         .catch((error) => console.log(error));
 }
 
-async function getStats(region, encryptedSummonerID) {
+async function getSoloDuoStats(region, encryptedSummonerID) {
     return fetch(
         `https://${region}.api.riotgames.com/lol/league/v4/entries/by-summoner/${encryptedSummonerID}`,
         {
@@ -39,8 +39,29 @@ async function getStats(region, encryptedSummonerID) {
         .then((response) => response.json())
         .then((data) => {
             for (var key in data) {
+                //console.log(data);
                 if (data[key].queueType === "RANKED_SOLO_5x5") {
-                    //console.log(data[key]);
+                    return data[key];
+                }
+            }
+        })
+        .catch((error) => console.log(error));
+}
+
+async function getFlexStats(region, encryptedSummonerID) {
+    return fetch(
+        `https://${region}.api.riotgames.com/lol/league/v4/entries/by-summoner/${encryptedSummonerID}`,
+        {
+
+            headers: {
+                "X-Riot-Token": process.env.RIOT_TOKEN,
+            },
+        }
+    ).then((response) => response.json())
+        .then((data) => {
+            for (var key in data) {
+                //console.log(data);
+                if (data[key].queueType === "RANKED_FLEX_SR") {
                     return data[key];
                 }
             }
@@ -56,7 +77,7 @@ async function scrapper(region, summonerName) {
         stat.exists = false;
         return stat;
     }
-    let stat = await getStats(region, summoner.id);
+    let stat = await getSoloDuoStats(region, summoner.id);
     if (!stat) {
         stat = [];
         stat.summonerName = summoner.name;
@@ -80,4 +101,37 @@ async function scrapper(region, summonerName) {
     return stat;
 }
 
-module.exports = { scrapper };
+
+async function scrapperFlex(region, summonerName) {
+    const patch = await getVersion();
+    var summoner = await getEncryptedSummonerID(region, summonerName);
+    if (summoner.status) {
+        let stat = {};
+        stat.exists = false;
+        return stat;
+    }
+    let stat = await getFlexStats(region, summoner.id);
+    if (!stat) {
+        stat = [];
+        stat.summonerName = summoner.name;
+        stat.profileIcon = `http://ddragon.leagueoflegends.com/cdn/${patch}/img/profileicon/${summoner.profileIconId}.png`;
+        stat.tier = "Unranked";
+        stat.rank = "0";
+        stat.leaguePoints = "0";
+        stat.winrate = "0";
+        stat.wins = "0";
+        stat.losses = "0";
+        stat.opgg = `https://euw.op.gg/summoners/euw/${summoner.name.replace(/ /g, "%20")}`;
+        return stat;
+    }
+    stat.summonerName = summoner.name;
+    stat.profileIcon = `http://ddragon.leagueoflegends.com/cdn/${patch}/img/profileicon/${summoner.profileIconId}.png`;
+    stat.winrate = (stat.wins / (stat.losses + stat.wins) * 100).toFixed(2);
+    stat.opgg = `https://euw.op.gg/summoners/euw/${summoner.name.replace(/ /g, "%20")}`;
+    for (var key in stat) {
+        stat[key] = stat[key].toString();
+    }
+    return stat;
+}
+
+module.exports = { scrapper, scrapperFlex };

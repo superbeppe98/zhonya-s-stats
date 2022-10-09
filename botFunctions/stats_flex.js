@@ -1,9 +1,9 @@
 const riot = require('../scrapper.js');
 const reply = require('../reply.js');
 
-async function stats(config, interaction) {
+async function stats_flex(config, interaction) {
     var usernameArg = interaction.options.get('username')?.value;
-    var stats = await riot.scrapper(config.region, usernameArg);
+    var stats = await riot.scrapperFlex(config.region, usernameArg);
     //console.log(stats);
     if (stats.exists === false) {
         interaction.reply('This player doesn\'t exist.');
@@ -16,4 +16,4 @@ async function stats(config, interaction) {
     await interaction.reply({ embeds: [message] });
 }
 
-module.exports = stats;
+module.exports = stats_flex;

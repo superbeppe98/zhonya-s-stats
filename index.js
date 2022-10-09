@@ -1,5 +1,4 @@
 const fs = require('fs');
-const path = require('path');
 config = require('dotenv').config();
 const { Client, GatewayIntentBits, Partials } = require("discord.js");
 const router = require('./botFunctions/_mainRouter.js');
@@ -16,7 +15,6 @@ const client = new Client({
     ],
     partials: [Partials.Channel],
 }); client.login(process.env.DISCORD_TOKEN);
-
 
 client.on('interactionCreate', async interaction => {
     if (!interaction.isCommand()) return;

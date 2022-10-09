@@ -1,4 +1,4 @@
-const { MessageActionRow, MessageButton, ButtonStyle, ButtonBuilder, EmbedBuilder, ActionRowBuilder } = require("discord.js");
+const { ButtonStyle, ButtonBuilder, EmbedBuilder, ActionRowBuilder } = require("discord.js");
 const utils = require("./utilities.js");
 
 function summonerStat(
@@ -23,7 +23,7 @@ function summonerStat(
       icon_url: profileIcon,
       url: opgg,
     },
-    description: `This player have ${wins} wins and ${losses} losses over past 7 days.`,
+    description: `This player have ${wins} wins and ${losses} losses in the current season.`,
     thumbnail: {
       url: `https://github.com/SuperBeppe98/Zhonya-s-Stats/raw/main/ranks/${tier}.png`,
     },
