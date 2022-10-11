@@ -8,7 +8,6 @@ async function region(config, interaction) {
   }
   newRegion = utils.formatRegion(regionArg);
 
-
   db.setRegion(interaction.guild.id, newRegion);
 
   await interaction.reply(`New region set to ${regionArg}.`);
