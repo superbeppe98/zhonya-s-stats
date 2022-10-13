@@ -47,20 +47,6 @@ async function setChannel(guild_id, channel_id) {
     await mongo_ref.updateOne({ guild_id: guild_id }, { $set: { channel_id: channel_id } });
 }
 
-async function setRegion(guild_id, region) {
-  var mongo_ref = connection.db.collection('Zhonya-s-Stats');
-  var guild_data = await mongo_ref.findOne({ guild_id: guild_id });
-  if (guild_data === null) {
-    var new_guild = {
-      guild_id: guild_id,
-      region: region
-    };
-    await mongo_ref.insertOne(new_guild);
-  }
-  else
-    await mongo_ref.updateOne({ guild_id: guild_id }, { $set: { region: region } });
-}
-
 async function removeUser(guild_id, summoner_name) {
   var mongo_ref = connection.db.collection('Zhonya-s-Stats');
   var guild_data = await mongo_ref.findOne({ guild_id: guild_id });
@@ -69,14 +55,14 @@ async function removeUser(guild_id, summoner_name) {
   await mongo_ref.updateOne({ guild_id: guild_id }, { $unset: { ["users." + summoner_name]: "" } });
 }
 
-async function userExist(guild_id, summoner_name) {
+async function userExist(guild_id, discord_username) {
   var mongo_ref = connection.db.collection('Zhonya-s-Stats');
   var guild_data = await mongo_ref.findOne({ guild_id: guild_id });
   if (guild_data === null)
     return false;
   if (!guild_data.users)
     return false;
-  if (!(summoner_name in guild_data.users))
+  if (!(discord_username in guild_data.users))
     return false;
   return true;
 }

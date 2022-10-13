@@ -69,7 +69,7 @@ async function getFlexStats(region, encryptedSummonerID) {
         .catch((error) => console.log(error));
 }
 
-async function scrapper(region, summonerName) {
+async function scrapper(region, summonerName, queue) {
     const patch = await getVersion();
     var summoner = await getEncryptedSummonerID(region, summonerName);
     if (summoner.status) {
@@ -77,7 +77,13 @@ async function scrapper(region, summonerName) {
         stat.exists = false;
         return stat;
     }
-    let stat = await getSoloDuoStats(region, summoner.id);
+    if (queue === "solo/duo") {
+        stat = await getSoloDuoStats(region, summoner.id);
+    }
+    else if (queue === "flex") {
+        stat = await getFlexStats(region, summoner.id);
+    }
+
     if (!stat) {
         stat = [];
         stat.summonerName = summoner.name;
