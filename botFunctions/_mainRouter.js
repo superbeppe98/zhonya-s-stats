@@ -5,7 +5,6 @@ const pino = require('./pino');
 const removeFromLeaderboard = require('./remove_from_leaderboard');
 const server = require('./server');
 const setChannel = require('./set_channel');
-const setRegion = require('./set_region');
 const stats = require('./stats');
 
 async function router(config, interaction) {
@@ -23,10 +22,8 @@ async function router(config, interaction) {
         server(config, interaction)
     else if (interaction.commandName == 'set_channel')
         setChannel(config, interaction)
-    else if (interaction.commandName == 'set_region')
-        setRegion(config, interaction)
     else if (interaction.commandName == 'stats')
-        stats(config, interaction)
+        stats(interaction)
 }
 
 module.exports = router;
