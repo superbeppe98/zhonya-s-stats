@@ -26,7 +26,7 @@ async function router(config, interaction) {
     else if (interaction.commandName == 'set_region')
         setRegion(config, interaction)
     else if (interaction.commandName == 'stats')
-        stats(config, interaction)
+        stats(interaction)
 }
 
 module.exports = router;
