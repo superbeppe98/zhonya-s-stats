@@ -2,7 +2,7 @@ const riot = require('../scrapper.js');
 const reply = require('../reply.js');
 const utils = require('../utilities.js');
 
-async function stats(interaction) {
+async function stats(config, interaction) {
     var summonerName = interaction.options.get('summoner-name')?.value;
     var region = interaction.options.get('region')?.value;
     if (!utils.isValidRegion(region)) {

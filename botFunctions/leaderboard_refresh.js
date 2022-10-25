@@ -1,7 +1,7 @@
 const db = require("../database.js");
 const reply = require("../reply.js");
 
-async function leaderboard_refresh(interaction) {
+async function leaderboard_refresh(config, interaction) {
     let data = await db.getLeaderboard(interaction.guild.id);
     let { embed, row } = reply.leaderboardStat(interaction, data.users);
     if (interaction.isMessageComponent) {

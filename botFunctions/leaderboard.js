@@ -1,7 +1,7 @@
 const db = require("../database.js");
 const reply = require("../reply.js");
 
-async function leaderboard(interaction) {
+async function leaderboard(config, interaction) {
     if (await db.checkChannelSet(interaction.guild.id) === false) {
         interaction.reply('Please set a channel first.');
         return;

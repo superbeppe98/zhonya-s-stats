@@ -1,4 +1,4 @@
-async function pino(interaction) {
+async function pino(config, interaction) {
     await interaction.reply('ENEMY QUADRA KILL!');
 }
 
