@@ -37,7 +37,21 @@ async function add_to_leaderboard(config, interaction) {
     flexStats = await riot.scrapper(newRegion, summonerName, "flex");
     if (await db.userExist(interaction.guild.id, summonerName) === true) {
         db.getStats(interaction.guild.id, summonerName).then((stats) => {
-            console.log(stats);
+            var newStats = {
+                SOLO_hotStreak: stats.SOLO_hotStreak,
+                SOLO_leaguePoints: stats.SOLO_leaguePoints,
+                SOLO_wins: stats.SOLO_wins,
+                SOLO_losses: stats.SOLO_losses,
+                SOLO_rank: stats.SOLO_rank,
+                SOLO_winrate: stats.SOLO_winrate,
+                FLEX_hotStreak: flexStats.hotStreak,
+                FLEX_leaguePoints: flexStats.leaguePoints,
+                FLEX_wins: flexStats.wins,
+                FLEX_losses: flexStats.losses,
+                FLEX_rank: flexStats.tier + ' ' + flexStats.rank,
+                FLEX_winrate: flexStats.winrate
+            }
+            db.updateUser(interaction.guild.id, summonerName, newStats);
         });
     }
     await interaction.reply(`LoL account ${summonerName} of ${discordUsername} added to leaderboard.`);

@@ -76,6 +76,14 @@ async function getStats(guild_id, summoner_name) {
   return guild_data.users[summoner_name];
 }
 
+async function updateUser(guild_id, summoner_name, stats) {
+  var mongo_ref = connection.db.collection('Zhonya-s-Stats');
+  var guild_data = await mongo_ref.findOne({ guild_id: guild_id });
+  if (guild_data === null)
+    return;
+  await mongo_ref.updateOne({ guild_id: guild_id }, { $set: { ["users." + summoner_name]: stats } });
+}
+
 async function addUser(guild_id, stats, queue) {
   var mongo_ref = connection.db.collection('Zhonya-s-Stats');
   var guild_data = await mongo_ref.findOne({ guild_id: guild_id });
@@ -137,7 +145,6 @@ async function getLeaderboard(guild_id) {
   var guild_data = await mongo_ref.findOne({ guild_id: guild_id });
   if (guild_data === null)
     return;
-  console.log(guild_data);
   return guild_data;
 }
 
@@ -150,6 +157,6 @@ async function getChannel(guild_id) {
 }
 
 module.exports = {
-  checkSameChannel, checkChannelSet, userExist, setChannel, addUser,
+  checkSameChannel, checkChannelSet, userExist, setChannel, getStats, updateUser, addUser,
   checkHasUsers, checkMaxUsers, removeUser, getLeaderboard, getChannel
 };
