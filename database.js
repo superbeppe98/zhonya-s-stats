@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 const clientOptions = {
   useNewUrlParser: true,
+  useUnifiedTopology: true,
   dbName: 'Zhonya-s-Stats'
 };
 mongoose.connect(process.env.MONGO_URL, clientOptions);
