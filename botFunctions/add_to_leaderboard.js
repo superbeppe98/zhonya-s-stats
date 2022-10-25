@@ -11,8 +11,6 @@ async function add_to_leaderboard(config, interaction) {
         return;
     }
     newRegion = utils.formatRegion(region);
-    var queue = interaction.options.get('queue')?.value;
-
     if (await db.checkChannelSet(interaction.guild.id) === false) {
         interaction.reply('Please set a channel first.');
         return;
@@ -37,10 +35,10 @@ async function add_to_leaderboard(config, interaction) {
     db.addUser(interaction.guild.id, soloDuostats, "solo/duo");
 
     flexStats = await riot.scrapper(newRegion, summonerName, "flex");
-    if (await db.userExist(interaction.guild.id, discordUsername) === true) {
-        //todo check if the user is already in the leaderboard on flex or solo/duo
-    } else {
-        db.addUser(interaction.guild.id, flexStats, "flex");
+    if (await db.userExist(interaction.guild.id, summonerName) === true) {
+        db.getStats(interaction.guild.id, summonerName).then((stats) => {
+            console.log(stats);
+        });
     }
     await interaction.reply(`LoL account ${summonerName} of ${discordUsername} added to leaderboard.`);
 }

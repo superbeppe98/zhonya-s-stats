@@ -56,14 +56,14 @@ async function removeUser(guild_id, summoner_name) {
   await mongo_ref.updateOne({ guild_id: guild_id }, { $unset: { ["users." + summoner_name]: "" } });
 }
 
-async function userExist(guild_id, discord_username) {
+async function userExist(guild_id, summoner_name) {
   var mongo_ref = connection.db.collection('Zhonya-s-Stats');
   var guild_data = await mongo_ref.findOne({ guild_id: guild_id });
   if (guild_data === null)
     return false;
   if (!guild_data.users)
     return false;
-  if (!(discord_username in guild_data.users))
+  if (!(summoner_name in guild_data.users))
     return false;
   return true;
 }
@@ -84,21 +84,20 @@ async function addUser(guild_id, stats, queue) {
     formatted_stats = {
       SOLO_hotStreak: stats.hotStreak,
       SOLO_leaguePoints: stats.leaguePoints,
+      SOLO_wins: stats.wins,
       SOLO_losses: stats.losses,
       SOLO_rank: stats.tier + ' ' + stats.rank,
-      SOLO_winrate: stats.winrate,
-      SOLO_wins: stats.wins
+      SOLO_winrate: stats.winrate
     }
   } else if (queue === "flex") {
     formatted_stats = {
       FLEX_hotStreak: stats.hotStreak,
       FLEX_leaguePoints: stats.leaguePoints,
+      FLEX_wins: stats.wins,
       FLEX_losses: stats.losses,
       FLEX_rank: stats.tier + ' ' + stats.rank,
-      FLEX_winrate: stats.winrate,
-      FLEX_wins: stats.wins
+      FLEX_winrate: stats.winrate
     }
-    console.log(formatted_stats);
   }
   if (guild_data === null) {
     var new_guild = {

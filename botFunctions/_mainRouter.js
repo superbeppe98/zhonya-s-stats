@@ -5,15 +5,15 @@ const removeFromLeaderboard = require('./remove_from_leaderboard');
 const setChannel = require('./set_channel');
 const stats = require('./stats');
 
-async function router(config, interaction) {
+async function router(interaction) {
     if (interaction.commandName == 'add_to_leaderboard')
-        addToLeaderBoard(config, interaction)
+        addToLeaderBoard(interaction)
     else if (interaction.commandName == 'leaderboard')
-        leaderboard(config, interaction)
+        leaderboard(interaction)
     else if (interaction.commandName == 'pino')
-        pino(config, interaction)
+        pino(interaction)
     else if (interaction.commandName == 'remove_from_leaderboard')
-        removeFromLeaderboard(config, interaction)
+        removeFromLeaderboard(interaction)
     else if (interaction.commandName == 'set_channel')
         setChannel(interaction)
     else if (interaction.commandName == 'stats')

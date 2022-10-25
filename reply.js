@@ -94,7 +94,6 @@ function leaderboardStat(interaction, users) {
   }
   //console.log(res);
   embed.addFields({ name: title, value: res });
-  //embed.addFields(title, res, false);
   const row = new ActionRowBuilder().addComponents(
     new ButtonBuilder()
       .setCustomId("refresh")
