@@ -1,5 +1,5 @@
-async function ping(interaction) {
-    await interaction.reply('ENEMY QUADRA KILL!');
+async function pino(config, interaction) {
+    await interaction.reply('ENEMY QUADRA KILL! BUT GOLD IV');
 }
 
-module.exports = ping;
+module.exports = pino;

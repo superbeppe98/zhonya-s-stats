@@ -2,7 +2,7 @@ const riot = require('../scrapper.js');
 const reply = require('../reply.js');
 const utils = require('../utilities.js');
 
-async function stats(interaction) {
+async function stats(config, interaction) {
     var summonerName = interaction.options.get('summoner-name')?.value;
     var region = interaction.options.get('region')?.value;
     if (!utils.isValidRegion(region)) {
@@ -11,12 +11,7 @@ async function stats(interaction) {
     }
     newRegion = utils.formatRegion(region);
     var queueArg = interaction.options.get('queue')?.value;
-    if (queueArg.toLowerCase() == "solo/duo") {
-        var stats = await riot.scrapper(newRegion, summonerName);
-    }
-    else if (queueArg.toLowerCase() == "flex") {
-        var stats = await riot.scrapperFlex(newRegion, summonerName);
-    }
+    var stats = await riot.scrapper(newRegion, summonerName, queueArg);
     //console.log(stats);
     if (stats.exists === false) {
         interaction.reply('This player doesn\'t exist.');

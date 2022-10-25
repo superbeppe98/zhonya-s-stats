@@ -56,8 +56,8 @@ function leaderboardStat(interaction, users) {
   for (var key in users) {
     if (key.length > longest_summonerName)
       longest_summonerName = key.length
-    if (users[key].rank.length > longest_rank)
-      longest_rank = users[key].rank.length
+    if (users[key].SOLO_rank.length > longest_rank)
+      longest_rank = users[key].SOLO_rank.length
   }
   title0 = 'Rank';
   title1 = 'Summoner';
@@ -82,19 +82,18 @@ function leaderboardStat(interaction, users) {
     else if (i === 2) rank = '🥈';
     else if (i === 3) rank = '🥉';
     else rank = i + ' ';
-    if (users[key].winrate.length < 5) percentage = users[key].winrate + (' '.repeat(6 - users[key].winrate.length));
-    else percentage = users[key].winrate;
-    if (users[key].rank === 'Unranked 0') users[key].rank = 'Unranked';
-    if (users[key].leaguePoints.length < 2) users[key].leaguePoints += ' ';
-    if (users[key].hotStreak === ('true' || true)) hotStreak = '🔥';
+    if (users[key].SOLO_winrate.length < 5) percentage = users[key].SOLO_winrate + (' '.repeat(6 - users[key].SOLO_winrate.length));
+    else percentage = users[key].SOLO_winrate;
+    if (users[key].SOLO_rank === 'Unranked 0') users[key].SOLO_rank = 'Unranked';
+    if (users[key].SOLO_leaguePoints.length < 2) users[key].SOLO_leaguePoints += ' ';
+    if (users[key].SOLO_hotStreak === ('true' || true)) hotStreak = '🔥';
     else hotStreak = ' ';
-    let line = ('`' + rank + ' '.repeat(4 + (i >= 10 ? 1 : 0)) + key + ' '.repeat(longest_summonerName - key.length + 3) + users[key].rank + ' '.repeat(longest_rank - users[key].rank.length + 2) + users[key].leaguePoints + '  ' + percentage + '`' + ' ' + hotStreak + '\n');
+    let line = ('`' + rank + ' '.repeat(4 + (i >= 10 ? 1 : 0)) + key + ' '.repeat(longest_summonerName - key.length + 3) + users[key].SOLO_rank + ' '.repeat(longest_rank - users[key].SOLO_rank.length + 2) + users[key].SOLO_leaguePoints + '  ' + percentage + '`' + ' ' + hotStreak + '\n');
     res += (line);
     i++;
   }
   //console.log(res);
   embed.addFields({ name: title, value: res });
-  //embed.addFields(title, res, false);
   const row = new ActionRowBuilder().addComponents(
     new ButtonBuilder()
       .setCustomId("refresh")

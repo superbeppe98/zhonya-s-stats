@@ -1,6 +1,6 @@
 const db = require("../database.js");
 
-async function remove_from_leaderboard(interaction) {
+async function remove_from_leaderboard(config, interaction) {
     var username_arg = interaction.options.get('username')?.value;
     if (await db.checkChannelSet(interaction.guild.id) === false) {
         interaction.reply('Please set a channel first.');

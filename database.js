@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 const clientOptions = {
   useNewUrlParser: true,
+  useUnifiedTopology: true,
   dbName: 'Zhonya-s-Stats'
 };
 mongoose.connect(process.env.MONGO_URL, clientOptions);
@@ -47,20 +48,6 @@ async function setChannel(guild_id, channel_id) {
     await mongo_ref.updateOne({ guild_id: guild_id }, { $set: { channel_id: channel_id } });
 }
 
-async function setRegion(guild_id, region) {
-  var mongo_ref = connection.db.collection('Zhonya-s-Stats');
-  var guild_data = await mongo_ref.findOne({ guild_id: guild_id });
-  if (guild_data === null) {
-    var new_guild = {
-      guild_id: guild_id,
-      region: region
-    };
-    await mongo_ref.insertOne(new_guild);
-  }
-  else
-    await mongo_ref.updateOne({ guild_id: guild_id }, { $set: { region: region } });
-}
-
 async function removeUser(guild_id, summoner_name) {
   var mongo_ref = connection.db.collection('Zhonya-s-Stats');
   var guild_data = await mongo_ref.findOne({ guild_id: guild_id });
@@ -81,17 +68,45 @@ async function userExist(guild_id, summoner_name) {
   return true;
 }
 
-async function addUser(guild_id, stats) {
+async function getStats(guild_id, summoner_name) {
   var mongo_ref = connection.db.collection('Zhonya-s-Stats');
   var guild_data = await mongo_ref.findOne({ guild_id: guild_id });
-  let formatted_stats = {
-    hotStreak: stats.hotStreak,
-    leaguePoints: stats.leaguePoints,
-    losses: stats.losses,
-    rank: stats.tier + ' ' + stats.rank,
-    winrate: stats.winrate,
-    wins: stats.wins
-  };
+  if (guild_data === null)
+    return;
+  return guild_data.users[summoner_name];
+}
+
+async function updateUser(guild_id, summoner_name, stats) {
+  var mongo_ref = connection.db.collection('Zhonya-s-Stats');
+  var guild_data = await mongo_ref.findOne({ guild_id: guild_id });
+  if (guild_data === null)
+    return;
+  await mongo_ref.updateOne({ guild_id: guild_id }, { $set: { ["users." + summoner_name]: stats } });
+}
+
+async function addUser(guild_id, stats, queue) {
+  var mongo_ref = connection.db.collection('Zhonya-s-Stats');
+  var guild_data = await mongo_ref.findOne({ guild_id: guild_id });
+  var formatted_stats = "";
+  if (queue === "solo/duo") {
+    formatted_stats = {
+      SOLO_hotStreak: stats.hotStreak,
+      SOLO_leaguePoints: stats.leaguePoints,
+      SOLO_wins: stats.wins,
+      SOLO_losses: stats.losses,
+      SOLO_rank: stats.tier + ' ' + stats.rank,
+      SOLO_winrate: stats.winrate
+    }
+  } else if (queue === "flex") {
+    formatted_stats = {
+      FLEX_hotStreak: stats.hotStreak,
+      FLEX_leaguePoints: stats.leaguePoints,
+      FLEX_wins: stats.wins,
+      FLEX_losses: stats.losses,
+      FLEX_rank: stats.tier + ' ' + stats.rank,
+      FLEX_winrate: stats.winrate
+    }
+  }
   if (guild_data === null) {
     var new_guild = {
       guild_id: guild_id,
@@ -130,7 +145,6 @@ async function getLeaderboard(guild_id) {
   var guild_data = await mongo_ref.findOne({ guild_id: guild_id });
   if (guild_data === null)
     return;
-  console.log(guild_data);
   return guild_data;
 }
 
@@ -143,6 +157,6 @@ async function getChannel(guild_id) {
 }
 
 module.exports = {
-  checkSameChannel, checkChannelSet, userExist, setChannel, addUser,
+  checkSameChannel, checkChannelSet, userExist, setChannel, getStats, updateUser, addUser,
   checkHasUsers, checkMaxUsers, removeUser, getLeaderboard, getChannel
 };
