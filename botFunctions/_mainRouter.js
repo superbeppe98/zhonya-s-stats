@@ -2,7 +2,6 @@ const addToLeaderBoard = require('./add_to_leaderboard');
 const leaderboard = require('./leaderboard');
 const pino = require('./pino');
 const removeFromLeaderboard = require('./remove_from_leaderboard');
-const server = require('./server');
 const setChannel = require('./set_channel');
 const stats = require('./stats');
 
