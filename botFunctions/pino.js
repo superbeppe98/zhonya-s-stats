@@ -1,5 +1,5 @@
-async function ping(interaction) {
+async function pino(interaction) {
     await interaction.reply('ENEMY QUADRA KILL!');
 }
 
-module.exports = ping;
+module.exports = pino;

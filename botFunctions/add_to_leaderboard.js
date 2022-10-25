@@ -1,5 +1,6 @@
 const db = require("../database.js");
 const riot = require('../scrapper.js');
+const utils = require('../utilities.js');
 
 async function add_to_leaderboard(config, interaction) {
     var discordUsername = interaction.options.get('discord-username')?.value;
@@ -28,13 +29,20 @@ async function add_to_leaderboard(config, interaction) {
         interaction.reply('The leaderboard is full.');
         return;
     }
-    var stats = await riot.scrapper(config.region, summonerName, queue);
-    if (stats.exists === false) {
+    var soloDuostats = await riot.scrapper(newRegion, summonerName, "solo/duo");
+    if (soloDuostats.exists === false) {
         interaction.reply('This player doesn\'t exist.');
         return;
     }
-    db.addUser(interaction.guild.id, stats);
-    await interaction.reply(`${usernameArg} added to leaderboard.`);
+    db.addUser(interaction.guild.id, soloDuostats, "solo/duo");
+
+    flexStats = await riot.scrapper(newRegion, summonerName, "flex");
+    if (await db.userExist(interaction.guild.id, discordUsername) === true) {
+        //todo check if the user is already in the leaderboard on flex or solo/duo
+    } else {
+        db.addUser(interaction.guild.id, flexStats, "flex");
+    }
+    await interaction.reply(`LoL account ${summonerName} of ${discordUsername} added to leaderboard.`);
 }
 
 module.exports = add_to_leaderboard;

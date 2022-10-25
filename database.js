@@ -68,17 +68,38 @@ async function userExist(guild_id, discord_username) {
   return true;
 }
 
-async function addUser(guild_id, stats) {
+async function getStats(guild_id, summoner_name) {
   var mongo_ref = connection.db.collection('Zhonya-s-Stats');
   var guild_data = await mongo_ref.findOne({ guild_id: guild_id });
-  let formatted_stats = {
-    hotStreak: stats.hotStreak,
-    leaguePoints: stats.leaguePoints,
-    losses: stats.losses,
-    rank: stats.tier + ' ' + stats.rank,
-    winrate: stats.winrate,
-    wins: stats.wins
-  };
+  if (guild_data === null)
+    return;
+  return guild_data.users[summoner_name];
+}
+
+async function addUser(guild_id, stats, queue) {
+  var mongo_ref = connection.db.collection('Zhonya-s-Stats');
+  var guild_data = await mongo_ref.findOne({ guild_id: guild_id });
+  var formatted_stats = "";
+  if (queue === "solo/duo") {
+    formatted_stats = {
+      SOLO_hotStreak: stats.hotStreak,
+      SOLO_leaguePoints: stats.leaguePoints,
+      SOLO_losses: stats.losses,
+      SOLO_rank: stats.tier + ' ' + stats.rank,
+      SOLO_winrate: stats.winrate,
+      SOLO_wins: stats.wins
+    }
+  } else if (queue === "flex") {
+    formatted_stats = {
+      FLEX_hotStreak: stats.hotStreak,
+      FLEX_leaguePoints: stats.leaguePoints,
+      FLEX_losses: stats.losses,
+      FLEX_rank: stats.tier + ' ' + stats.rank,
+      FLEX_winrate: stats.winrate,
+      FLEX_wins: stats.wins
+    }
+    console.log(formatted_stats);
+  }
   if (guild_data === null) {
     var new_guild = {
       guild_id: guild_id,

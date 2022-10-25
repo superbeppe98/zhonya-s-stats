@@ -15,9 +15,5 @@ const data = new SlashCommandBuilder()
         option.setName('region')
             .setDescription('Enter the region you want to use (ex: EUW for Europe West)')
             .setRequired(true))
-    .addStringOption(option =>
-        option.setName('queue')
-            .setDescription('Enter the type of queue (solo/duo or flex)')
-            .setRequired(true));
 
 module.exports = { data }

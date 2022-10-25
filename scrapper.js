@@ -63,6 +63,7 @@ async function scrapper(region, summonerName, queue) {
         return stat;
     }
     stat = await getStats(region, summoner.id, queue);
+    console.log(stat);
     if (!stat) {
         stat = [];
         stat.summonerName = summoner.name;

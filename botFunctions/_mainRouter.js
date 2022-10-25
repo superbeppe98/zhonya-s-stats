@@ -15,7 +15,7 @@ async function router(config, interaction) {
     else if (interaction.commandName == 'remove_from_leaderboard')
         removeFromLeaderboard(config, interaction)
     else if (interaction.commandName == 'set_channel')
-        setChannel(config, interaction)
+        setChannel(interaction)
     else if (interaction.commandName == 'stats')
         stats(interaction)
 }
