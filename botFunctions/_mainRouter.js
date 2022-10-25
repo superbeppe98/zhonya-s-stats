@@ -3,7 +3,6 @@ const leaderboard = require('./leaderboard');
 const ping = require('./ping');
 const pino = require('./pino');
 const removeFromLeaderboard = require('./remove_from_leaderboard');
-const server = require('./server');
 const setChannel = require('./set_channel');
 const setRegion = require('./set_region');
 const stats = require('./stats');
