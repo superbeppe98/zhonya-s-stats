@@ -84,7 +84,7 @@ function leaderboardStat(interaction, users) {
     if (i === 1) rank = '🥇';
     else if (i === 2) rank = '🥈';
     else if (i === 3) rank = '🥉';
-    else rank = i + ' ';
+    else rank = ' ' + i;
     if (users.solo[key].SOLO_winrate.length < 5) percentage = users.solo[key].SOLO_winrate + (' '.repeat(6 - users.solo[key].SOLO_winrate.length));
     else percentage = users.solo[key].SOLO_winrate;
     if (users.solo[key].SOLO_rank === 'Unranked 0') users.solo[key].SOLO_rank = 'Unranked';
