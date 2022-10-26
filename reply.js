@@ -74,7 +74,7 @@ function leaderboardStat(interaction, users) {
   i = 1;
   let res = '';
   users = utils.sortRank(users);
-  // console.log(users);
+  console.log(users);
   for (var key in users) {
     users[key].winrate += '%';
     let rank, percentage, hotStreak;

@@ -40,7 +40,7 @@ function sortRank(users) {
         'DIAMOND IV', 'DIAMOND III', 'DIAMOND II', 'DIAMOND I',
         'MASTER I', 'GRANDMASTER I', 'CHALLENGER I'];
     for (var key in users) {
-        users[key].leaderboardRank = ranks.indexOf(users[key].rank);
+        users[key].leaderboardRank = ranks.indexOf(users[key].SOLO_rank);
     }
     users = Object.keys(users).sort(function (a, b) {
         return users[b].leaderboardRank - users[a].leaderboardRank;
