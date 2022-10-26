@@ -33,7 +33,6 @@ async function add_to_leaderboard(config, interaction) {
         return;
     }
     db.addUser(interaction.guild.id, soloDuostats, "solo/duo");
-
     flexStats = await riot.scrapper(newRegion, summonerName, "flex");
     if (await db.userExist(interaction.guild.id, summonerName) === true) {
         db.getStats(interaction.guild.id, summonerName).then((stats) => {

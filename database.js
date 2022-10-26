@@ -16,77 +16,77 @@ connection.on('disconnected', function () {
 connection.on('error', console.error.bind(console, 'connection error:'));
 module.exports = connection;
 
-async function checkSameChannel(guild_id, channel_id) {
-  var mongo_ref = connection.db.collection('Zhonya-s-Stats');
-  var guild_data = await mongo_ref.findOne({ guild_id: guild_id });
-  if (guild_data === null)
+async function checkSameChannel(guildId, channelId) {
+  var mongoRef = connection.db.collection('Zhonya-s-Stats');
+  var guildData = await mongoRef.findOne({ guildId: guildId });
+  if (guildData === null)
     return false;
-  if (guild_data.channel_id === channel_id)
+  if (guildData.channelId === channelId)
     return true;
   return false;
 }
 
-async function checkChannelSet(guild_id) {
-  var mongo_ref = connection.db.collection('Zhonya-s-Stats');
-  var guild_data = await mongo_ref.findOne({ guild_id: guild_id });
-  if (guild_data === null)
+async function checkChannelSet(guildId) {
+  var mongoRef = connection.db.collection('Zhonya-s-Stats');
+  var guildData = await mongoRef.findOne({ guildId: guildId });
+  if (guildData === null)
     return false;
   return true
 }
 
-async function setChannel(guild_id, channel_id) {
-  var mongo_ref = connection.db.collection('Zhonya-s-Stats');
-  var guild_data = await mongo_ref.findOne({ guild_id: guild_id });
-  if (guild_data === null) {
-    var new_guild = {
-      guild_id: guild_id,
-      channel_id: channel_id
+async function setChannel(guildId, channelId) {
+  var mongoRef = connection.db.collection('Zhonya-s-Stats');
+  var guildData = await mongoRef.findOne({ guildId: guildId });
+  if (guildData === null) {
+    var newGuild = {
+      guildId: guildId,
+      channelId: channelId
     };
-    await mongo_ref.insertOne(new_guild);
+    await mongoRef.insertOne(newGuild);
   }
   else
-    await mongo_ref.updateOne({ guild_id: guild_id }, { $set: { channel_id: channel_id } });
+    await mongoRef.updateOne({ guildId: guildId }, { $set: { channelId: channelId } });
 }
 
-async function removeUser(guild_id, summoner_name) {
-  var mongo_ref = connection.db.collection('Zhonya-s-Stats');
-  var guild_data = await mongo_ref.findOne({ guild_id: guild_id });
-  if (guild_data === null)
+async function removeUser(guildId, summonerName) {
+  var mongoRef = connection.db.collection('Zhonya-s-Stats');
+  var guildData = await mongoRef.findOne({ guildId: guildId });
+  if (guildData === null)
     return;
-  await mongo_ref.updateOne({ guild_id: guild_id }, { $unset: { ["users." + summoner_name]: "" } });
+  await mongoRef.updateOne({ guildId: guildId }, { $unset: { ["users." + summonerName]: "" } });
 }
 
-async function userExist(guild_id, summoner_name) {
-  var mongo_ref = connection.db.collection('Zhonya-s-Stats');
-  var guild_data = await mongo_ref.findOne({ guild_id: guild_id });
-  if (guild_data === null)
+async function userExist(guildId, summonerName) {
+  var mongoRef = connection.db.collection('Zhonya-s-Stats');
+  var guildData = await mongoRef.findOne({ guildId: guildId });
+  if (guildData === null)
     return false;
-  if (!guild_data.users)
+  if (!guildData.users)
     return false;
-  if (!(summoner_name in guild_data.users))
+  if (!(summonerName in guildData.users))
     return false;
   return true;
 }
 
-async function getStats(guild_id, summoner_name) {
-  var mongo_ref = connection.db.collection('Zhonya-s-Stats');
-  var guild_data = await mongo_ref.findOne({ guild_id: guild_id });
-  if (guild_data === null)
+async function getStats(guildId, summonerName) {
+  var mongoRef = connection.db.collection('Zhonya-s-Stats');
+  var guildData = await mongoRef.findOne({ guildId: guildId });
+  if (guildData === null)
     return;
-  return guild_data.users[summoner_name];
+  return guildData.users[summonerName];
 }
 
-async function updateUser(guild_id, summoner_name, stats) {
-  var mongo_ref = connection.db.collection('Zhonya-s-Stats');
-  var guild_data = await mongo_ref.findOne({ guild_id: guild_id });
-  if (guild_data === null)
+async function updateUser(guildId, summonerName, stats) {
+  var mongoRef = connection.db.collection('Zhonya-s-Stats');
+  var guildData = await mongoRef.findOne({ guildId: guildId });
+  if (guildData === null)
     return;
-  await mongo_ref.updateOne({ guild_id: guild_id }, { $set: { ["users." + summoner_name]: stats } });
+  await mongoRef.updateOne({ guildId: guildId }, { $set: { ["users." + summonerName]: stats } });
 }
 
-async function addUser(guild_id, stats, queue) {
-  var mongo_ref = connection.db.collection('Zhonya-s-Stats');
-  var guild_data = await mongo_ref.findOne({ guild_id: guild_id });
+async function addUser(guildId, stats, queue) {
+  var mongoRef = connection.db.collection('Zhonya-s-Stats');
+  var guildData = await mongoRef.findOne({ guildId: guildId });
   var formatted_stats = "";
   if (queue === "solo/duo") {
     formatted_stats = {
@@ -107,53 +107,53 @@ async function addUser(guild_id, stats, queue) {
       FLEX_winrate: stats.winrate
     }
   }
-  if (guild_data === null) {
-    var new_guild = {
-      guild_id: guild_id,
+  if (guildData === null) {
+    var newGuild = {
+      guildId: guildId,
       users: { [stats.summonerName]: formatted_stats }
     };
-    await mongo_ref.insertOne(new_guild);
+    await mongoRef.insertOne(newGuild);
   }
   else
-    await mongo_ref.updateOne({ guild_id: guild_id }, { $set: { ["users." + stats.summonerName]: formatted_stats } });
+    await mongoRef.updateOne({ guildId: guildId }, { $set: { ["users." + stats.summonerName]: formatted_stats } });
 }
 
-async function checkHasUsers(guild_id) {
-  var mongo_ref = connection.db.collection('Zhonya-s-Stats');
-  var guild_data = await mongo_ref.findOne({ guild_id: guild_id });
-  if (guild_data === null)
+async function checkHasUsers(guildId) {
+  var mongoRef = connection.db.collection('Zhonya-s-Stats');
+  var guildData = await mongoRef.findOne({ guildId: guildId });
+  if (guildData === null)
     return false;
-  if (guild_data.users[0] === null)
+  if (guildData.users[0] === null)
     return false;
   return true;
 }
 
-async function checkMaxUsers(guild_id) {
-  var mongo_ref = connection.db.collection('Zhonya-s-Stats');
-  var guild_data = await mongo_ref.findOne({ guild_id: guild_id });
-  if (guild_data === null)
+async function checkMaxUsers(guildId) {
+  var mongoRef = connection.db.collection('Zhonya-s-Stats');
+  var guildData = await mongoRef.findOne({ guildId: guildId });
+  if (guildData === null)
     return false;
-  if (!guild_data.users)
+  if (!guildData.users)
     return false;
-  if (Object.keys(guild_data.users).length >= 9)
+  if (Object.keys(guildData.users).length >= 9)
     return true;
   return false;
 }
 
-async function getLeaderboard(guild_id) {
-  var mongo_ref = connection.db.collection('Zhonya-s-Stats');
-  var guild_data = await mongo_ref.findOne({ guild_id: guild_id });
-  if (guild_data === null)
+async function getLeaderboard(guildId) {
+  var mongoRef = connection.db.collection('Zhonya-s-Stats');
+  var guildData = await mongoRef.findOne({ guildId: guildId });
+  if (guildData === null)
     return;
-  return guild_data;
+  return guildData;
 }
 
-async function getChannel(guild_id) {
-  var mongo_ref = connection.db.collection('Zhonya-s-Stats');
-  var guild_data = await mongo_ref.findOne({ guild_id: guild_id });
-  if (guild_data === null)
+async function getChannel(guildId) {
+  var mongoRef = connection.db.collection('Zhonya-s-Stats');
+  var guildData = await mongoRef.findOne({ guildId: guildId });
+  if (guildData === null)
     return;
-  return guild_data.channel_id;
+  return guildData.channelId;
 }
 
 module.exports = {

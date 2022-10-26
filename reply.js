@@ -74,21 +74,45 @@ function leaderboardStat(interaction, users) {
   i = 1;
   let res = '';
   users = utils.sortRank(users);
-  // console.log(users);
-  for (var key in users) {
-    users[key].winrate += '%';
+  //console.log(users);
+  line = '`' + "Solo" + '  ' + title1 + ' '.repeat(longest_summonerName - title1.length + 3) +
+    title2 + ' '.repeat(longest_rank - title2.length + 2) + title3 + '  ' + title4 + '`' + '\n';
+  res += (line);
+  for (var key in users.solo) {
+    users.solo[key].winrate += '%';
     let rank, percentage, hotStreak;
     if (i === 1) rank = '🥇';
     else if (i === 2) rank = '🥈';
     else if (i === 3) rank = '🥉';
     else rank = i + ' ';
-    if (users[key].SOLO_winrate.length < 5) percentage = users[key].SOLO_winrate + (' '.repeat(6 - users[key].SOLO_winrate.length));
-    else percentage = users[key].SOLO_winrate;
-    if (users[key].SOLO_rank === 'Unranked 0') users[key].SOLO_rank = 'Unranked';
-    if (users[key].SOLO_leaguePoints.length < 2) users[key].SOLO_leaguePoints += ' ';
-    if (users[key].SOLO_hotStreak === ('true' || true)) hotStreak = '🔥';
+    if (users.solo[key].SOLO_winrate.length < 5) percentage = users.solo[key].SOLO_winrate + (' '.repeat(6 - users.solo[key].SOLO_winrate.length));
+    else percentage = users.solo[key].SOLO_winrate;
+    if (users.solo[key].SOLO_rank === 'Unranked 0') users.solo[key].SOLO_rank = 'Unranked';
+    if (users.solo[key].SOLO_leaguePoints.length < 2) users.solo[key].SOLO_leaguePoints += ' ';
+    if (users.solo[key].SOLO_hotStreak === ('true' || true)) hotStreak = '🔥';
     else hotStreak = ' ';
-    let line = ('`' + rank + ' '.repeat(4 + (i >= 10 ? 1 : 0)) + key + ' '.repeat(longest_summonerName - key.length + 3) + users[key].SOLO_rank + ' '.repeat(longest_rank - users[key].SOLO_rank.length + 2) + users[key].SOLO_leaguePoints + '  ' + percentage + '`' + ' ' + hotStreak + '\n');
+    let line = ('`' + rank + ' '.repeat(4 + (i >= 10 ? 1 : 0)) + key + ' '.repeat(longest_summonerName - key.length + 3) + users.solo[key].SOLO_rank + ' '.repeat(longest_rank - users.solo[key].SOLO_rank.length + 2) + users.solo[key].SOLO_leaguePoints + '  ' + percentage + '`' + ' ' + hotStreak + '\n');
+    res += (line);
+    i++;
+  }
+  line = '`' + "Flex" + '  ' + title1 + ' '.repeat(longest_summonerName - title1.length + 3) +
+    title2 + ' '.repeat(longest_rank - title2.length + 2) + title3 + '  ' + title4 + '`' + '\n';
+  res += (line);
+  i = 1;
+  for (var key in users.flex) {
+    users.flex[key].winrate += '%';
+    let rank, percentage, hotStreak;
+    if (i === 1) rank = '🥇';
+    else if (i === 2) rank = '🥈';
+    else if (i === 3) rank = '🥉';
+    else rank = ' ' + i;
+    if (users.flex[key].FLEX_winrate.length < 5) percentage = users.flex[key].FLEX_winrate + (' '.repeat(6 - users.flex[key].FLEX_winrate.length));
+    else percentage = users.flex[key].FLEX_winrate;
+    if (users.flex[key].FLEX_rank === 'Unranked 0') users.flex[key].FLEX_rank = 'Unranked';
+    if (users.flex[key].FLEX_leaguePoints.length < 2) users.flex[key].FLEX_leaguePoints += ' ';
+    if (users.flex[key].FLEX_hotStreak === ('true' || true)) hotStreak = '🔥';
+    else hotStreak = ' ';
+    let line = ('`' + rank + ' '.repeat(4 + (i >= 10 ? 1 : 0)) + key + ' '.repeat(longest_summonerName - key.length + 3) + users.flex[key].FLEX_rank + ' '.repeat(longest_rank - users.flex[key].FLEX_rank.length + 2) + users.flex[key].FLEX_leaguePoints + '  ' + percentage + '`' + ' ' + hotStreak + '\n');
     res += (line);
     i++;
   }
