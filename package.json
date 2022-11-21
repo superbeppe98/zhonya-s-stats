@@ -4,25 +4,26 @@
   "description": "Zhonya's Stats",
   "main": "index.js",
   "scripts": {
+    "start": "index.js",
+    "build": "react-scripts build",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "index.js"
+    "eject": "react-scripts eject"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SuperBeppe98/Zhonya-s-Stats.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SuperBeppe98/Zhonya-s-Stats/issues"
+  },
+  "homepage": "https://github.com/SuperBeppe98/Zhonya-s-Stats#readme",
+  "dependencies": {
+    "discord.js": "^14.5.0",
+    "dotenv": "^16.0.3",
+    "mongoose": "^6.6.1",
+    "node-fetch": "^2.6.7",
+    "nodemon": "^2.0.20"
   }
-},
-"repository": {
-  "type": "git",
-  "url": "git+https://github.com/SuperBeppe98/Zhonya-s-Stats.git"
-},
-"author": "",
-"license": "ISC",
-"bugs": {
-  "url": "https://github.com/SuperBeppe98/Zhonya-s-Stats/issues"
-},
-"homepage": "https://github.com/SuperBeppe98/Zhonya-s-Stats#readme",
-"dependencies": {
-  "discord.js": "^14.5.0",
-  "dotenv": "^16.0.3",
-  "mongoose": "^6.6.1",
-  "node-fetch": "^2.6.7",
-  "nodemon": "^2.0.20"
-}
 }
