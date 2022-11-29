@@ -1,8 +1,8 @@
-const addToLeaderBoard = require('./add_to_leaderboard');
+const addToLeaderBoard = require('./addToLeaderboard');
 const leaderboard = require('./leaderboard');
 const pino = require('./pino');
-const removeFromLeaderboard = require('./remove_from_leaderboard');
-const setChannel = require('./set_channel');
+const removeFromLeaderboard = require('./removeFromLeaderboard');
+const setChannel = require('./setChannel');
 const stats = require('./stats');
 
 async function router(config, interaction) {
