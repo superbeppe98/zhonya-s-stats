@@ -18,7 +18,13 @@ const client = new Client({
 
 client.on('interactionCreate', async interaction => {
     if (!interaction.isCommand()) return;
-    console.log(`Received command: ${interaction.commandName}`);
+    let commandName = interaction.commandName;
+    let commandGroup = " " + interaction.options.getSubcommandGroup();
+    let commandSubcommand = " " + interaction.options.getSubcommand();
+    if (!interaction.options.getSubcommandGroup()) {
+        commandGroup = '';
+    }
+    console.log(`Received command: ${commandName}${commandGroup}${commandSubcommand}`);
     router(config, interaction);
 });
 
