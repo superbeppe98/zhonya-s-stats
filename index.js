@@ -5,6 +5,8 @@ const router = require('./botFunctions/_mainRouter');
 const leaderboard_refresh = require('./botFunctions/leaderboardRefresh');
 require('./utilities');
 
+require('./deploy-commands.js');
+
 const client = new Client({
     intents: [
         GatewayIntentBits.DirectMessages,
