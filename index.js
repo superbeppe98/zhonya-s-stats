@@ -1,9 +1,11 @@
 const fs = require('fs');
 config = require('dotenv').config();
 const { Client, GatewayIntentBits, Partials } = require("discord.js");
-const router = require('./botFunctions/_mainRouter.js');
-const leaderboard_refresh = require('./botFunctions/leaderboard_refresh.js');
-require('./utilities.js');
+const router = require('./botFunctions/_mainRouter');
+const leaderboard_refresh = require('./botFunctions/leaderboardRefresh');
+require('./utilities');
+
+require('./deploy-commands.js');
 
 const client = new Client({
     intents: [
