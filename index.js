@@ -22,7 +22,7 @@ client.on('interactionCreate', async interaction => {
     if (!interaction.isCommand()) return;
     let commandName = interaction.commandName;
     let commandGroup = " " + interaction.options.getSubcommandGroup();
-    let commandSubcommand = " " + interaction.options.getSubcommand();
+    let commandSubcommand = " " + interaction.options.getSubcommand(false);
     if (!interaction.options.getSubcommandGroup()) {
         commandGroup = '';
     }
