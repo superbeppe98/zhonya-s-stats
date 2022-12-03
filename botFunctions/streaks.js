@@ -3,7 +3,9 @@ const { EmbedBuilder } = require('discord.js');
 
 // Keep Puppeteer open so we don't have to open it each time we get a /streaks
 // command
-const browserPromise = puppeteer.launch();
+const browserPromise = puppeteer.launch({
+    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+});
 
 async function streaks(config, interaction) {
     // Give ourselves some time to reply
