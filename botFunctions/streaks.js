@@ -3,7 +3,7 @@ const { EmbedBuilder } = require('discord.js');
 
 // Keep Puppeteer open so we don't have to open it each time we get a /streaks
 // command
-const browserPromise = puppeteer.launch({headless: false});
+const browserPromise = puppeteer.launch();
 
 async function streaks(config, interaction) {
     // Give ourselves some time to reply
@@ -33,9 +33,9 @@ async function streaks(config, interaction) {
         ]);
 
         if (!await page.$("span.summoner-name")) {
-            const embeds= new EmbedBuilder()
-            .setColor(0xf03405)
-            .setTitle("No summoner found")
+            const embeds = new EmbedBuilder()
+                .setColor(0xf03405)
+                .setTitle("No summoner found")
 
             await interaction.editReply({ embeds: [embeds] });
             return;
@@ -55,17 +55,17 @@ async function streaks(config, interaction) {
             }
             return acc;
         });
-        
-        const embeds= new EmbedBuilder()
+
+        const embeds = new EmbedBuilder()
             .setColor(0xf0bd05)
             .setTitle(summoner)
             .setDescription("Summary of multi kills in recent games")
             .setThumbnail(image)
             .addFields(
-                {name: "Double kills", value: (multiKills["Double Kill"] ?? 0).toString()},
-                {name: "Triple kills", value: (multiKills["Triple Kill"] ?? 0).toString()},
-                {name: "Quadra kills", value: (multiKills["Quadra Kill"] ?? 0).toString()},
-                {name: "Penta kills", value: (multiKills["Penta Kill"] ?? 0).toString()},
+                { name: "Double kills", value: (multiKills["Double Kill"] ?? 0).toString() },
+                { name: "Triple kills", value: (multiKills["Triple Kill"] ?? 0).toString() },
+                { name: "Quadra kills", value: (multiKills["Quadra Kill"] ?? 0).toString() },
+                { name: "Penta kills", value: (multiKills["Penta Kill"] ?? 0).toString() },
             )
 
         await interaction.editReply({ embeds: [embeds] });
