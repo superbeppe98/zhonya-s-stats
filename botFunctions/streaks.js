@@ -20,6 +20,8 @@ async function streaks(config, interaction) {
         // New tab
         page = await browser.newPage();
 
+        page.setDefaultNavigationTimeout(0);
+
         const region = interaction.options.get('region').value;
         const summoner = interaction.options.get('summoner-name').value;
 
