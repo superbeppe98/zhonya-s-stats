@@ -1,4 +1,4 @@
-const puppeteer = require("puppeteer").default;
+const puppeteer = require("puppeteer");
 const { EmbedBuilder } = require('discord.js');
 
 // Keep Puppeteer open so we don't have to open it each time we get a /streaks
