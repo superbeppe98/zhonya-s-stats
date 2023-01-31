@@ -6,14 +6,14 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGENAMES: ${{ github.repository }}
+  IMAGE_NAME: ${{ github.repository }}
 
 jobs:
   build-and-push-image-amd64:
     runs-on: ubuntu-latest
     name: AMD64
     env:
-      IMAGE_NAME: ${{ env.IMAGENAMES }}/amd64
+      IMAGE_NAME: ${{ env.IMAGE_NAME }}/amd64
 
     steps:
       - name: Checkout repository
@@ -44,7 +44,7 @@ jobs:
     runs-on: arm64
     name: ARM64
     env:
-      IMAGE_NAME: ${{ env.IMAGENAMES }}/arm64
+      IMAGE_NAME: ${{ env.IMAGE_NAME }}/arm64
 
     steps:
       - name: Checkout repository
