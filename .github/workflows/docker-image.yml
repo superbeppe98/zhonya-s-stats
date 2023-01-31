@@ -11,9 +11,9 @@ env:
 jobs:
   build-and-push-image:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
+    strategy:
+      matrix:
+        architecture: [arm64, amd64]
 
     steps:
       - name: Checkout repository
@@ -39,4 +39,4 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          build-arg: TARGET_ARCH=noarch
+          target: ${{ matrix.architecture }}
