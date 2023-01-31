@@ -1,4 +1,4 @@
-name: Docker image CI
+name: Docker Image CI
 
 on:
   push:
@@ -39,3 +39,4 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          build-arg: TARGET_ARCH=noarch
