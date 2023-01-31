@@ -17,7 +17,7 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         push: true
-        tags: ghcr.io/SuperBeppe98/zhonya-s-stats:arm64-latest
+        tags: ghcr.io/superbeppe98/zhonya-s-stats:arm64-latest
         context: .
 
     - name: Build Docker Image for amd64 architecture
