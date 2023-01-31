@@ -17,14 +17,14 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         push: true
-        tags: ghcr.io/${{ env.REPOSITORY }}:arm64-${{ env.TAG }}
+        tags: ghcr.io/SuperBeppe98/zhonya-s-stats:arm64-latest
         context: .
 
     - name: Build Docker Image for amd64 architecture
       uses: docker/build-push-action@v2
       with:
         push: true
-        tags: ghcr.io/${{ env.REPOSITORY }}:amd64-${{ env.TAG }}
+        tags: ghcr.io/SuperBeppe98/zhonya-s-stats:amd64-latest
         context: .
       
     - name: Login to ghcr.io
