@@ -32,4 +32,4 @@ jobs:
       with:
           registry: ghcr.io
           username: superbeppe98
-          password: ${{ secrets.GITHUB_TOKEN }}
+          password: ${{ secrets.TOKEN }}
