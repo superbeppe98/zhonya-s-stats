@@ -1,4 +1,4 @@
-name: Docker Image CI with buildx
+name: Docker Image CI
 
 on:
   push:
@@ -9,7 +9,7 @@ env:
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-  build-and-push-image:
+  build-and-push-images:
     runs-on: ubuntu-latest
     name: arm64 and amd64
     permissions:
@@ -27,12 +27,11 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Install buildx
+      - name: Set up Docker buildx
         run: |
-          echo "Installing buildx"
           docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
-          docker run --rm mplatform/mquery --os linux --arch arm64 v1.16.0
-          docker buildx create --use
+          docker buildx create --name mybuilder
+          docker buildx use mybuilder
           docker buildx inspect --bootstrap
 
       - name: Extract metadata (tags, labels) for Docker
@@ -41,11 +40,11 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
-      - name: Build and push Docker image for arm64 and amd64
+      - name: Build and push Docker images with buildx
         run: |
-          echo "Building Docker image for arm64 and amd64"
           docker buildx build \
             --platform linux/arm64,linux/amd64 \
             --push \
-            --tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.meta.outputs.tags }} \
+            --tags "${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.meta.outputs.tags }}" \
+            --label "${{ steps.meta.outputs.labels }}" \
             .
