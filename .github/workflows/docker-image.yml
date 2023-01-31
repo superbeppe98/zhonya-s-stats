@@ -13,22 +13,23 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Install Docker CLI
-      uses: actions/docker/cli@v2
+    - name: Build Docker Image for arm64 architecture
+      uses: docker/build-push-action@v2
+      with:
+        push: true
+        tags: ghcr.io/${{ env.REPOSITORY }}:arm64-${{ env.TAG }}
+        context: .
 
+    - name: Build Docker Image for amd64 architecture
+      uses: docker/build-push-action@v2
+      with:
+        push: true
+        tags: ghcr.io/${{ env.REPOSITORY }}:amd64-${{ env.TAG }}
+        context: .
+      
     - name: Login to ghcr.io
       uses: docker/login-action@v1
       with:
         registry: ghcr.io
         username: ${{ secrets.GHCR_USERNAME }}
         password: ${{ secrets.GHCR_PASSWORD }}
-
-    - name: Build arm64 image
-      run: |
-        docker build -t ghcr.io/${{ env.REPOSITORY }}:arm64-${{ env.TAG }} .
-        docker push ghcr.io/${{ env.REPOSITORY }}:arm64-${{ env.TAG }}
-
-    - name: Build amd64 image
-      run: |
-        docker build -t ghcr.io/${{ env.REPOSITORY }}:amd64-${{ env.TAG }} .
-        docker push ghcr.io/${{ env.REPOSITORY }}:amd64-${{ env.TAG }}
