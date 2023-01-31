@@ -24,7 +24,7 @@ jobs:
       uses: docker/build-push-action@v2
       with:
         push: true
-        tags: ghcr.io/SuperBeppe98/zhonya-s-stats:amd64-latest
+        tags: ghcr.io/superbeppe98/zhonya-s-stats:amd64-latest
         context: .
       
     - name: Login to ghcr.io
