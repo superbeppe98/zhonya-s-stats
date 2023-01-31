@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: Docker Image CI with buildx
 
 on:
   push:
@@ -9,9 +9,9 @@ env:
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
-  build-and-push-image-arm64:
+  build-and-push-image:
     runs-on: ubuntu-latest
-    name: arm64
+    name: arm64 and amd64
     permissions:
       contents: read
       packages: write
@@ -27,37 +27,13 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta
-        uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
-        with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-
-      - name: Build and push Docker image for arm64
-        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
-        with:
-          context: .
-          push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
-
-  build-and-push-image-amd64:
-    runs-on: ubuntu-latest
-    name: amd64
-    permissions:
-      contents: read
-      packages: write
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Log in to the Container registry
-        uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
-        with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Install buildx
+        run: |
+          echo "Installing buildx"
+          docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
+          docker run --rm mplatform/mquery --os linux --arch arm64 v1.16.0
+          docker buildx create --use
+          docker buildx inspect --bootstrap
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
@@ -65,10 +41,11 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
-      - name: Build and push Docker image for amd64
-        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
-        with:
-          context: .
-          push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+      - name: Build and push Docker image for arm64 and amd64
+        run: |
+          echo "Building Docker image for arm64 and amd64"
+          docker buildx build \
+            --platform linux/arm64,linux/amd64 \
+            --push \
+            --tag ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.meta.outputs.tags }} \
+            .
