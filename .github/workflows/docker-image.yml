@@ -34,8 +34,14 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/arm64
 
-      - name: Install Chromium Browser
-        run: sudo apt-get update && sudo apt-get install -y chromium-browser
+      - name: Set environment variable
+        env:
+          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: "true"
+  
+      - name: Install Chromium
+        run: |
+            sudo apt-get update
+            sudo apt-get install chromium-browser
 
       - name: Build and push
         uses: docker/build-push-action@v4
