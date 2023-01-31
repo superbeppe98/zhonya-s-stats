@@ -15,6 +15,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
         
+      - name: Install Chromium Browser
+        run: sudo apt-get update && sudo apt-get install -y chromium-browser
+        
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
         
