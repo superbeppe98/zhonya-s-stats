@@ -39,7 +39,6 @@ jobs:
         with:
           context: .
           push: true
-          
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-amd64:latest,${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-amd64:amd64
           platforms: linux/amd64
           labels: ${{ steps.meta.outputs.labels }}
@@ -49,6 +48,6 @@ jobs:
         with:
           context: .
           push: true
-          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-amr64:latest,${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-amr64:amr64
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-arm64:latest,${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-arm64:arm64
           platforms: linux/arm64
           labels: ${{ steps.meta.outputs.labels }}
