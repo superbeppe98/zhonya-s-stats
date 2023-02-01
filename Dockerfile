@@ -14,14 +14,15 @@ RUN npm ci --only=production
 #Bundle app source
 COPY . .
 
-RUN apk add --no-cache
-nss
-freetype
-harfbuzz
-ca-certificates
-ttf-freefont
-nodejs
-yarn
+RUN apk add --no-cache \
+    nss \
+    freetype \
+    harfbuzz \
+    ca-certificates \
+    ttf-freefont \
+    nodejs \
+    yarn
+
 
 RUN echo "deb http://dl.google.com/linux/chrome/deb/ stable main" | tee -a /etc/apk/repositories
 && apk update
