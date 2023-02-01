@@ -27,6 +27,9 @@ RUN apk add --no-cache \
       ttf-freefont \
       nodejs \
       yarn
+   
+# Install npm
+RUN npm install -g npm
 
 # Tell Puppeteer to skip installing Chrome. We'll be using the installed package.
 ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/chromium-browser
