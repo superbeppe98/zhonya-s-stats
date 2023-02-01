@@ -23,15 +23,12 @@ RUN apk add --no-cache \
     nodejs \
     yarn
 
+RUN echo "deb http://dl.google.com/linux/chrome/deb/ stable main" | tee -a /etc/apk/repositories && \
+    apk update && \
+    apk add --no-cache chromium
 
-RUN echo "deb http://dl.google.com/linux/chrome/deb/ stable main" | tee -a /etc/apk/repositories
-&& apk update
-&& apk add --no-cache
-chromium
-
-Install Chromium from snap on arm64
-RUN apt-get update && apt-get install -y snapd
-&& snap install chromium
+RUN apt-get update && apt-get install -y snapd && \
+    snap install chromium
 
 Tell Puppeteer to skip installing Chrome. We'll be using the installed package.
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
