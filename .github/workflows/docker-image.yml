@@ -21,6 +21,36 @@ jobs:
         
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
+        
+      - name: Add arm64 architecture
+        run: |
+            sudo dpkg --add-architecture arm64
+        
+      - name: Create new list file in /etc/apt/sources.list.d
+        run: |
+           sudo touch /etc/apt/sources.list.d/arm-cross-compile-sources.list
+        
+      - name: Add sources to list file
+        run: |
+          echo 'deb [arch=arm64] http://ports.ubuntu.com/ focal main restricted' | sudo tee -a /etc/apt/sources.list.d/arm-cross-compile-sources.list
+          echo 'deb [arch=arm64] http://ports.ubuntu.com/ focal-updates main restricted' | sudo tee -a /etc/apt/sources.list.d/arm-cross-compile-sources.list
+          echo 'deb [arch=arm64] http://ports.ubuntu.com/ focal universe' | sudo tee -a /etc/apt/sources.list.d/arm-cross-compile-sources.list
+          echo 'deb [arch=arm64] http://ports.ubuntu.com/ focal-updates universe' | sudo tee -a /etc/apt/sources.list.d/arm-cross-compile-sources.list
+          echo 'deb [arch=arm64] http://ports.ubuntu.com/ focal multiverse' | sudo tee -a /etc/apt/sources.list.d/arm-cross-compile-sources.list
+          echo 'deb [arch=arm64] http://ports.ubuntu.com/ focal-updates multiverse' | sudo tee -a /etc/apt/sources.list.d/arm-cross-compile-sources.list
+          echo 'deb [arch=arm64] http://ports.ubuntu.com/ focal-backports main restricted universe multiverse' | sudo tee -a /etc/apt/sources.list.d/arm-cross-compile-sources.list
+
+      - name: Update sources.list
+        run: |
+          sudo sed -i -e 's/^deb/deb [arch=amd64]/' /etc/apt/sources.list
+        
+      - name: Update apt
+        run: |
+            sudo apt update
+      
+      - name: Install Chromium
+        run: |
+            sudo apt-get install chromium-browser:arm64
 
       - name: Log in to the Container registry
         uses: docker/login-action@f054a8b539a109f9f41c372932f1ae047eff08c9
