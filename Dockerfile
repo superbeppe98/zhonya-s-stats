@@ -14,9 +14,6 @@ RUN npm ci --only=production
 #Bundle app source
 COPY . .
 
-
-FROM alpine
-
 # Installs latest Chromium (100) package.
 RUN apk add --no-cache \
       chromium \
