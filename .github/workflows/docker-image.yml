@@ -39,7 +39,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/superbeppe98/${{ env.IMAGE_NAME }}-amd64:latest,${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-amd64:amd64
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-amd64:main,${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:main
           platforms: linux/amd64
           labels: ${{ steps.meta.outputs.labels }}
 
@@ -48,6 +48,6 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/superbeppe98/${{ env.IMAGE_NAME }}-arm64:latest,${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-arm64:arm64
+          tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}-arm64:main,${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:main
           platforms: linux/arm64
           labels: ${{ steps.meta.outputs.labels }}
