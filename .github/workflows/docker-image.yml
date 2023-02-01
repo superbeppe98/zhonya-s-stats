@@ -33,20 +33,12 @@ jobs:
         uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}/arm64
-
-      - name: Install Chromium
-        run: sudo apt-get install chromium-browser
-        env:
-          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
-          PUPPETEER_EXECUTABLE_PATH: 'which chromium'
-
-
-
+          
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
           context: .
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
