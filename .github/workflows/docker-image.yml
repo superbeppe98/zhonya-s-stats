@@ -38,6 +38,7 @@ jobs:
         run: sudo apt-get install chromium-browser
         env:
           PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: true
+          PUPPETEER_EXECUTABLE_PATH: 'which chromium'
 
 
 
