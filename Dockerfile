@@ -1,4 +1,4 @@
-FROM alpine
+FROM node:18-alpine
 
 # Create app directory
 WORKDIR /usr/src/app
@@ -13,6 +13,9 @@ RUN npm ci --only=production
 
 #Bundle app source
 COPY . .
+
+
+FROM alpine
 
 # Installs latest Chromium (100) package.
 RUN apk add --no-cache \
