@@ -16,7 +16,6 @@ RUN npm install
 COPY . .
 
 RUN apk add --no-cache \
-      chromium-browser \
       chromium \
       nss \
       freetype \
