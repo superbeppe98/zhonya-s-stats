@@ -30,7 +30,7 @@ RUN echo "deb http://dl.google.com/linux/chrome/deb/ stable main" | tee -a /etc/
 RUN apt-get update && apt-get install -y snapd && \
     snap install chromium
 
-Tell Puppeteer to skip installing Chrome. We'll be using the installed package.
+#Tell Puppeteer to skip installing Chrome. We'll be using the installed package.
 ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true
 PUPPETEER_EXECUTABLE_PATH=/snap/bin/chromium
 
