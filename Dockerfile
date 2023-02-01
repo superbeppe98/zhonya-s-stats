@@ -27,6 +27,8 @@ RUN echo "deb http://dl.google.com/linux/chrome/deb/ stable main" | tee -a /etc/
     apk update && \
     apk add --no-cache chromium
 
+RUN apt-get update && apt-get install -y apt
+
 RUN apt-get update && apt-get install -y snapd && \
     snap install chromium
 
