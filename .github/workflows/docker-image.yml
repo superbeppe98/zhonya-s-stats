@@ -46,8 +46,7 @@ jobs:
         
       - name: Update apt
         run: |
-            sudo apt update && sudo apt install -y libc6:arm64 liblzma5:arm64 liblzo2-2:arm64 libudev1:arm64 zlib1g:arm64
-
+            sudo apt update && sudo apt install -y libc6 liblzma5 liblzo2-2 libudev1 zlib1g
       
       - name: Install Chromium
         run: |
