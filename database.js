@@ -5,6 +5,7 @@ const clientOptions = {
   useUnifiedTopology: true,
   dbName: 'Zhonya-s-Stats'
 };
+
 mongoose.connect(process.env.MONGO_URL, clientOptions);
 var connection = mongoose.connection;
 connection.on('connected', function () {
