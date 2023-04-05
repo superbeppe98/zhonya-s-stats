@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 const clientOptions = {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-  strictQuery: true,
   dbName: 'Zhonya-s-Stats'
 };
 
