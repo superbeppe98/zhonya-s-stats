@@ -18,7 +18,7 @@
   },
   "homepage": "https://github.com/SuperBeppe98/zhonya-s-stats#readme",
   "dependencies": {
-    "discord.js": "^14.8.0",
+    "discord.js": "^14.12.1",
     "dotenv": "^16.0.3",
     "mongoose": "^6.11.3",
     "node-fetch": "^2.6.7",
