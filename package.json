@@ -23,6 +23,6 @@
     "mongoose": "^7.5.2",
     "node-fetch": "^3.3.2",
     "nodemon": "^3.0.1",
-    "puppeteer": "^21.2.1"
+    "puppeteer": "^21.3.4"
   }
 }
