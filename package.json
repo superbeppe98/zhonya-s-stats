@@ -22,7 +22,7 @@
     "dotenv": "^16.3.1",
     "mongoose": "^8.0.2",
     "node-fetch": "^3.3.2",
-    "nodemon": "^3.0.1",
+    "nodemon": "^3.0.2",
     "puppeteer": "^21.5.2"
   }
 }
