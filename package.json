@@ -19,7 +19,7 @@
   "homepage": "https://github.com/SuperBeppe98/zhonya-s-stats#readme",
   "dependencies": {
     "discord.js": "^14.14.1",
-    "dotenv": "^16.3.1",
+    "dotenv": "^16.4.2",
     "mongoose": "^8.0.2",
     "node-fetch": "^3.3.2",
     "nodemon": "^3.0.2",
